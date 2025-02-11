@@ -1,0 +1,10 @@
+avid-ata-react/node_modules/
+
+avid-ata-react/build/
+
+avid-ata-react/.env
+
+avid-ata-react/npm-debug.log*
+avid-ata-react/yarn-debug.log*
+
+.DS_Store
