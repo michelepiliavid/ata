@@ -8,7 +8,7 @@ def create_config(filename='ragdb.ini'):  #returns the vocabulary of key value p
     config_values = {
         'debug_mode': False,
         'log_level': 'ERROR',
-        'log_logfile': 'ragdb.log',
+        'log_logfile': 'rag.log',
         'dbname': '#DBNAME#',
         'dbhost': '#DBHOST#',
         'dbuser': '#DBUSER#',
@@ -34,7 +34,7 @@ def create_config(filename='ragdb.ini'):  #returns the vocabulary of key value p
     
     return config_values
 
-def read_config(filename='ragdb.ini'):
+def read_config(filename='rag.ini'):
     # Create a ConfigParser object
     config = configparser.ConfigParser()
 
@@ -52,7 +52,7 @@ def read_config(filename='ragdb.ini'):
             pass
     return config_values
     
-def write_config(config_values, filename='ragdb.ini'):
+def write_config(config_values, filename='rag.ini'):
     # Create a ConfigParser object
     config = configparser.ConfigParser()
 

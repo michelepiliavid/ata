@@ -17,6 +17,7 @@ from rag_rest import start_flask
 from rag_chat import *
 from rag_embed import *
 
+
 import sys
 #import threading #pip install threading
 from urllib.parse import urljoin
@@ -84,12 +85,13 @@ def concatena_stringhe_sovrapposte(str1, str2):
 
 def chat():
     global use_RAG
-    global use_BM25
+
     global use_RAG_source
     global use_prompt
     global use_prompt_emb
     global if_skip_already_processed
     global if_keep_session
+
     system_message = f"""You are a friendly chatbot. You respond in a concise, technically credible tone. Please use context information as source for information. Please do not invent information and do not provide generic answers. If you do not know the precise answer - please answer that you don't know. At the end of answer please show the list of sources used from the context. """
     delimiter = "```"
     # We use a delimiter to help the model understand the where the user_input starts and ends
@@ -100,7 +102,7 @@ def chat():
     while True:
         print("\n\nInsert number or prompt:")
         print("1 - Toggle RAG, currently it is:", use_RAG,",  RAG_source=", use_RAG_source)
-  
+
        
         print("3 - Index(encode) PDF/TXT/HTM/HTML/DOCX/XLSX/PPTX in PDF folder")
         print("31 - Toggle whether skip already processed files, now is:",if_skip_already_processed)
@@ -109,6 +111,7 @@ def chat():
         print("5 - Choose already encoded prompt to reuse, now it is: ",use_prompt)
         print("60 - Toggle session alive keeper (remember previuos answers), now is:", if_keep_session)
         print("62 - Print current messages sequence")
+
         print("9 - Exit")
         
         if os.isatty(sys.stdin.fileno())==True:
@@ -168,6 +171,7 @@ def chat():
 #                print(messages)
             case "62":
                 print("\n"+str(messages)+"\n")
+
             case "9":
                 os._exit(0)
             case  _:
@@ -182,8 +186,8 @@ def chat():
 
 try:
     
-    create_config("../config/ragdb.ini") #creates config if not exists
-    rag_globals.config_values=read_config("../config/ragdb.ini")
+    create_config("../config/rag.ini") #creates config if not exists
+    rag_globals.config_values=read_config("../config/rag.ini")
 
     logging.basicConfig(
         level=rag_globals.config_values['log_level'],
@@ -202,7 +206,7 @@ try:
   
     N_DIM = 1536
     use_RAG=False
-    use_BM25=False
+ 
     
     use_RAG_source=""
     if_record_prompt_embeddings=False
@@ -211,7 +215,7 @@ try:
     if_skip_already_processed=True
     if_keep_session=True
 
-    conn = psycopg.connect(dbname=rag_globals.config_values['dbname'], user=rag_globals.config_values['dbuser'], password=ragdb_globals.config_values['dbpassword'], host=ragdb_globals.config_values['dbhost'], autocommit=True)
+    conn = psycopg.connect(dbname=rag_globals.config_values['dbname'], user=rag_globals.config_values['dbuser'], password=rag_globals.config_values['dbpassword'], host=rag_globals.config_values['dbhost'], autocommit=True)
 
     #conn.execute('CREATE EXTENSION IF NOT EXISTS vector')
     #register_vector(conn)
@@ -219,6 +223,8 @@ try:
     #conn.execute('CREATE TABLE IF NOT EXISTS emb (id bigserial PRIMARY KEY, source_ref text, content text, embedding vector(1536))')
     #conn.execute('CREATE INDEX IF NOT EXISTS idx_emb ON emb USING hnsw (embedding vector_l2_ops)')
 
+    #conn.execute('CREATE EXTENSION IF NOT EXISTS pg_search')
+    #conn.execute("CREATE INDEX IF NOT EXISTS bm25_idx ON emb USING bm25 (id, content) WITH (key_field='id')"
     chat()
 except Exception as e :
     logging.critical("exception", e)
@@ -226,3 +232,4 @@ except Exception as e :
     logging.critical("exiting main thread")
     os._exit(0)
 
+    
