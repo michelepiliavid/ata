@@ -9,3 +9,4 @@ avid-ata-react/yarn-debug.log*
 
 .DS_Store
 *.pyc
+RAG/server/rag.log
