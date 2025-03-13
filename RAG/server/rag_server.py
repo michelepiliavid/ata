@@ -10,10 +10,9 @@ import pandas as pd
 import numpy as np
 
 import rag_globals    
-from ..config.rag_config import *
+from rag_config import *
 from rag_openai import *
 from rag_readers import *
-from rag_rest import start_flask
 from rag_chat import *
 from rag_embed import *
 
@@ -29,7 +28,7 @@ import json
 import hashlib
 import ast
 #from flask_cors import CORS
-
+from rag_rest import start_flask
 
 def get_doc_links_from_base_url(base_url):
     response = requests.get(base_url)
@@ -186,8 +185,8 @@ def chat():
 
 try:
     
-    create_config("../config/rag.ini") #creates config if not exists
-    rag_globals.config_values=read_config("../config/rag.ini")
+#    create_config("rag.ini") #creates config if not exists
+    rag_globals.config_values=read_config("rag.ini")
 
     logging.basicConfig(
         level=rag_globals.config_values['log_level'],

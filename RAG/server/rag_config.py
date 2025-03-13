@@ -2,7 +2,7 @@ import os
 import logging
 import configparser #pip install configparser
 
-def create_config(filename='ragdb.ini'):  #returns the vocabulary of key value pairs
+def create_config(filename='rag.ini'):  #returns the vocabulary of key value pairs
     
     #default empty config values
     config_values = {
@@ -21,7 +21,7 @@ def create_config(filename='ragdb.ini'):  #returns the vocabulary of key value p
         'openai_temperature': '1',
         'openai_vector_length': '1536',  
         'rest_port': '5000',
-        'rest_get_server_shutdown': 'rest/server/shutdown', #server definitive shutdown
+        'rest_get_server_shutdown': '/rest/server/shutdown', #server definitive shutdown
         'rest_put_generate_embeddings_for_file': '/rest/embeddings/put_generate_emb_for_file', #PUT passing filename field and content field the binary file content, returns embeddings list and chunks
         'rest_get_simple_answer': '/rest/conversation/get_simple_answer',         #GET passing prompt parameters in url. Answers with OPENAI answer
         'rest_post_complex_conversation': '/rest/conversation/post_complex_conversation'        #POST passing datafields: prompt, tags, old conversation(session). Retuns answer
